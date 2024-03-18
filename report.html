@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Test Report</title>
+
+		<link rel="stylesheet" href="../node_modules/cypress-reporter/web/reports/styles.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+	</head>
+	<body data-theme="dark">
+		<div id="header">
+			<span id="reportTitle">Tax Compliance</span>
+			<span id="date"></span>
+
+			<div id="starfield">
+				<div id="moon">
+					<div
+						id="moonspot1"
+						class="spots"
+					></div>
+					<div
+						id="moonspot2"
+						class="spots"
+					></div>
+				</div>
+				<div id="cover"></div>
+			</div>
+		</div>
+
+		<div class="flex-container">
+			<div class="flex-item stats">
+				Test Count
+				<div class="line"></div>
+				<div id="total">7</div>
+			</div>
+			<div class="flex-item stats">
+				Skipped Tests
+				<div class="line"></div>
+				<div id="skip">0</div>
+			</div>
+			<div class="flex-item stats">
+				Failed Tests
+				<div class="line"></div>
+				<div id="failed">2</div>
+			</div>
+			<div class="flex-item stats">
+				Passed Tests
+				<div class="line"></div>
+				<div id="passed">5</div>
+			</div>
+		</div>
+
+		<div class="flex-container">
+			<div
+				id="wheelChartContainer"
+				class="flex-item"
+			>
+				<h1>Overall Status</h1>
+				<div id="wheelChart"></div>
+			</div>
+
+			<div
+				id="barChartContainer"
+				class="flex-item"
+			>
+				<h1>Spec Status</h1>
+				<div id="testGroups"></div>
+			</div>
+		</div>
+		<div
+			class="flex-container"
+			class="flex-item"
+		>
+			<div id="timeChartContainer">
+				<h1>Test Time</h1>
+				<div id="timeChart"></div>
+			</div>
+		</div>
+		<script type="module" src="../node_modules/cypress-reporter/web/reports/scripts/scripts.js"></script>
+
+	</body>
+</html>
