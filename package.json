@@ -3,13 +3,13 @@
 	"version": "1.0.0",
 	"description": "Simple report plugin for Cypress",
 	"main": "dist/index.js",
-  "files": [
-    "src/",
-    "web/"
-  ],
+	"files": [
+		"src/",
+		"web/"
+	],
 	"repository": {
 		"type": "git",
-    "url": "https://github.com/jst1102/cypress-basic-reporter.git"
+		"url": "https://github.com/jst1102/cypress-basic-reporter.git"
 	},
 	"keywords": [
 		"Cypress, Reporting"
@@ -17,18 +17,18 @@
 	"scripts": {
 		"build": "babel src --out-dir dist --copy-files",
 		"combine-json": "node dist/combineJsonFiles.js",
-    "install": "cp report.html ../reports/finalReports"
+		"install": "node -e \"process.platform === 'win32' || cp report.html ../reports/finalReports\""
 	},
 	"author": "jst1102",
 	"license": "MIT",
-  "dependencies": {
-    "dayjs": "^1.11.10"
-  },
+	"dependencies": {
+		"dayjs": "^1.11.10"
+	},
 	"devDependencies": {
 		"@babel/cli": "^7.23.9",
 		"@babel/core": "^7.24.0",
 		"@babel/preset-env": "^7.24.0",
-		"cypress": "^10.11.0"
-		
+		"cypress": "^10.11.0",
+		"ncp": "^2.0.0"
 	}
 }
