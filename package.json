@@ -1,6 +1,6 @@
 {
 	"name": "cypress-basic-reporter",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "Simple report plugin for Cypress",
 	"main": "dist/index.js",
 	"files": [
