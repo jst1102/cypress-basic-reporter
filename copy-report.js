@@ -2,11 +2,11 @@ const path = require('path');
 const fs = require('fs');
 
 const sourceFile = path.join(__dirname, 'report.html');
-const reportsDir = path.join(__dirname, '..', 'reports');
-const destinationDir = path.join(reportsDir, 'finalReports');
+const destinationDir = path.join(process.cwd(), 'reports', 'finalReports');
 const destinationFile = path.join(destinationDir, 'report.html');
 
 // Create the 'reports' directory if it doesn't exist
+const reportsDir = path.join(process.cwd(), 'reports');
 if (!fs.existsSync(reportsDir)) {
   fs.mkdirSync(reportsDir, { recursive: true });
 }
