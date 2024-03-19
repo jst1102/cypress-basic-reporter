@@ -5,7 +5,14 @@
 	"main": "dist/index.js",
 	"files": [
 		"src/",
-		"web/"
+		"web/",
+		"copy-report.js",
+		"LICENSE",
+		"README.md",
+		"report.html",
+		".gitignore",
+		"package-lock.json",
+		"package-lock.json"
 	],
 	"repository": {
 		"type": "git",
