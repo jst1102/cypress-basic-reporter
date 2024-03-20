@@ -1,10 +1,10 @@
 const path = require('path');
-const fs = require('fs');
+const fse = require('fs-extra');
 
-function getAppRootDir () {
+async function getAppRootDir () {
   let currentDir = __dirname;
   while (true) {
-    if (fs.existsSync(path.join(currentDir, 'package.json'))) {
+    if (await fse.pathExists(path.join(currentDir, 'package.json'))) {
       // Check if the parent directory is node_modules
       const parentDir = path.join(currentDir, '..');
       if (path.basename(parentDir) === 'node_modules') {
@@ -21,19 +21,18 @@ function getAppRootDir () {
   return currentDir;
 }
 
-
 class Directory {
   constructor(dirPath) {
     this.dirPath = dirPath;
   }
 
-  exists() {
-    return fs.existsSync(this.dirPath);
+  async exists() {
+    return await fse.pathExists(this.dirPath);
   }
 
-  create() {
-    if (!this.exists()) {
-      fs.mkdirSync(this.dirPath, { recursive: true });
+  async create() {
+    if (!(await this.exists())) {
+      await fse.mkdir(this.dirPath, { recursive: true });
     }
   }
 }
@@ -43,28 +42,29 @@ class File {
     this.filePath = filePath;
   }
 
-  copyTo(destinationPath) {
-    fs.copyFile(this.filePath, destinationPath, (err) => {
-      if (err) {
-        console.error(`Error copying ${this.filePath}:`, err);
-        return;
-      }
+  async copyTo(destinationPath) {
+    try {
+      await fse.copy(this.filePath, destinationPath);
       console.log(`${this.filePath} copied successfully`);
-    });
+    } catch (err) {
+      console.error(`Error copying ${this.filePath}:`, err);
+    }
   }
 }
 
-const appRootDir = getAppRootDir();
-console.log(appRootDir);
-const sourceFile = new File(path.join(__dirname, 'report.html'));
-const destinationDir = new Directory(path.join(appRootDir, 'reports', 'finalReports'));
-const destinationFile = path.join(destinationDir.dirPath, 'report.html');
+(async () => {
+  const appRootDir = await getAppRootDir();
+  console.log(appRootDir);
+  const sourceFile = new File(path.join(__dirname, 'report.html'));
+  const destinationDir = new Directory(path.join(appRootDir, 'reports', 'finalReports'));
+  const destinationFile = path.join(destinationDir.dirPath, 'report.html');
 
-// Create the 'reports' directory if it doesn't exist
-new Directory(path.join(appRootDir, 'reports')).create();
+  // Create the 'reports' directory if it doesn't exist
+  await new Directory(path.join(appRootDir, 'reports')).create();
 
-// Create the 'finalReports' directory if it doesn't exist
-destinationDir.create();
+  // Create the 'finalReports' directory if it doesn't exist
+  await destinationDir.create();
 
-// Copy the file
-sourceFile.copyTo(destinationFile);
+  // Copy the file
+  await sourceFile.copyTo(destinationFile);
+})();

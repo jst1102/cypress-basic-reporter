@@ -29,7 +29,8 @@
 	"author": "jst1102",
 	"license": "MIT",
 	"dependencies": {
-		"dayjs": "^1.11.10"
+		"dayjs": "^1.11.10",
+		"fs-extra": "^11.2.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.23.9",
