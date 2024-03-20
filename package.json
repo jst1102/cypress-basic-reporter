@@ -29,13 +29,13 @@
 	"author": "jst1102",
 	"license": "MIT",
 	"dependencies": {
-		"dayjs": "^1.11.10",
-		"fs-extra": "^11.2.0"
+		"dayjs": "^1.11.10"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.23.9",
 		"@babel/core": "^7.24.0",
 		"@babel/preset-env": "^7.24.0",
-		"cypress": "^13.7.0"
+		"cypress": "^13.7.0",
+		"fs-extra": "^11.2.0"
 	}
 }
