@@ -1,11 +1,11 @@
-const fs = require('fs');
+const fse = require('fs-extra');
 const path = require('path');
 
 const folderPath = './reports';
 const outputPath = './finalReports/allReports.json';
 
 // Get all JSON files in the folder
-const jsonFiles = fs.readdirSync(folderPath).filter(file => path.extname(file).toLowerCase() === '.json');
+const jsonFiles = fse.readdirSync(folderPath).filter(file => path.extname(file).toLowerCase() === '.json');
 
 // Initialize an empty array to store combined JSON data
 const combinedData = [];
@@ -20,6 +20,6 @@ for (const file of jsonFiles) {
 }
 
 // Write the combined JSON data to a new file
-fs.writeFileSync(outputPath, JSON.stringify(combinedData, null, 2), 'utf8');
+fse.writeFileSync(outputPath, JSON.stringify(combinedData, null, 2), 'utf8');
 
 console.log('Combining JSON files completed.');
