@@ -1,26 +1,56 @@
 const path = require('path');
 const fs = require('fs');
 
-const sourceFile = path.join(__dirname, 'report.html');
-const destinationDir = path.join(process.cwd(), 'reports', 'finalReports');
-const destinationFile = path.join(destinationDir, 'report.html');
+function getAppRootDir () {
+  let currentDir = __dirname
+  while(!fs.existsSync(path.join(currentDir, 'package.json'))) {
+    currentDir = path.join(currentDir, '..')
+  }
+  return currentDir
+}
+
+class Directory {
+  constructor(dirPath) {
+    this.dirPath = dirPath;
+  }
+
+  exists() {
+    return fs.existsSync(this.dirPath);
+  }
+
+  create() {
+    if (!this.exists()) {
+      fs.mkdirSync(this.dirPath, { recursive: true });
+    }
+  }
+}
+
+class File {
+  constructor(filePath) {
+    this.filePath = filePath;
+  }
+
+  copyTo(destinationPath) {
+    fs.copyFile(this.filePath, destinationPath, (err) => {
+      if (err) {
+        console.error(`Error copying ${this.filePath}:`, err);
+        return;
+      }
+      console.log(`${this.filePath} copied successfully`);
+    });
+  }
+}
+
+const appRootDir = getAppRootDir();
+const sourceFile = new File(path.join(__dirname, 'report.html'));
+const destinationDir = new Directory(path.join(appRootDir, 'reports', 'finalReports'));
+const destinationFile = path.join(destinationDir.dirPath, 'report.html');
 
 // Create the 'reports' directory if it doesn't exist
-const reportsDir = path.join(process.cwd(), 'reports');
-if (!fs.existsSync(reportsDir)) {
-  fs.mkdirSync(reportsDir, { recursive: true });
-}
+new Directory(path.join(appRootDir, 'reports')).create();
 
 // Create the 'finalReports' directory if it doesn't exist
-if (!fs.existsSync(destinationDir)) {
-  fs.mkdirSync(destinationDir, { recursive: true });
-}
+destinationDir.create();
 
 // Copy the file
-fs.copyFile(sourceFile, destinationFile, (err) => {
-  if (err) {
-    console.error('Error copying report.html:', err);
-    return;
-  }
-  console.log('report.html copied successfully');
-});
+sourceFile.copyTo(destinationFile);
