@@ -2,12 +2,25 @@ const path = require('path');
 const fs = require('fs');
 
 function getAppRootDir () {
-  let currentDir = __dirname
-  while(!fs.existsSync(path.join(currentDir, 'package.json'))) {
-    currentDir = path.join(currentDir, '..')
+  let currentDir = __dirname;
+  while (true) {
+    if (fs.existsSync(path.join(currentDir, 'package.json'))) {
+      // Check if the parent directory is node_modules
+      const parentDir = path.join(currentDir, '..');
+      if (path.basename(parentDir) === 'node_modules') {
+        // If so, set currentDir to the parent of node_modules
+        currentDir = path.join(parentDir, '..');
+      } else {
+        // If not, we've found the app root
+        break;
+      }
+    } else {
+      currentDir = path.join(currentDir, '..');
+    }
   }
-  return currentDir
+  return currentDir;
 }
+
 
 class Directory {
   constructor(dirPath) {
@@ -42,6 +55,7 @@ class File {
 }
 
 const appRootDir = getAppRootDir();
+console.log(appRootDir);
 const sourceFile = new File(path.join(__dirname, 'report.html'));
 const destinationDir = new Directory(path.join(appRootDir, 'reports', 'finalReports'));
 const destinationFile = path.join(destinationDir.dirPath, 'report.html');
