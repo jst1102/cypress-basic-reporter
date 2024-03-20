@@ -1,5 +1,5 @@
 const path = require('path');
-const fs = require('fs');
+const fse = require('fs-extra');
 
 const writeFile = ({ filePath, data }) => {
   const fullPath = path.join(process.cwd(), filePath);
@@ -7,16 +7,16 @@ const writeFile = ({ filePath, data }) => {
   const finalReportsDir = path.join(reportsDir, 'finalReports');
 
   // Check if the 'reports' directory exists, and create it if it doesn't
-  if (!fs.existsSync(reportsDir)) {
-    fs.mkdirSync(reportsDir, { recursive: true });
+  if (!fse.existsSync(reportsDir)) {
+    fse.mkdirSync(reportsDir, { recursive: true });
   }
 
   // Check if the 'finalReports' directory exists, and create it if it doesn't
-  if (!fs.existsSync(finalReportsDir)) {
-    fs.mkdirSync(finalReportsDir, { recursive: true });
+  if (!fse.existsSync(finalReportsDir)) {
+    fse.mkdirSync(finalReportsDir, { recursive: true });
   }
 
-  return fs
+  return fse
     .outputJson(fullPath, data, { spaces: 2 })
     .then(() => {
       return null;
